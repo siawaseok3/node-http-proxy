@@ -10,4 +10,16 @@
  *          Dante - The Divine Comedy (Canto III)
  */
 
-module.exports = require('./lib/http-proxy');
+// 必要なパッケージをインポート
+const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+const app = express();
+
+// プロキシミドルウェアの設定
+app.use('/api', createProxyMiddleware({ target: 'https://api.example.com', changeOrigin: true }));
+
+// サーバーの起動
+app.listen(3000, () => {
+  console.log('Proxy server is running on http://localhost:3000');
+});
